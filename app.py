@@ -76,10 +76,10 @@ class MoviesView(Resource):
         return movies_schema.dump(movies.all()), 200
 
 
-@movie_ns.route('/<int:id>')
+@movie_ns.route('/<int:m_id>')
 class MovieView(Resource):
-    def get(self, id):
-        movie = Movie.query.get(id)
+    def get(self, m_id):
+        movie = Movie.query.get(m_id)
         return movie_schema.dump(movie), 200
 
 
@@ -93,26 +93,26 @@ class DirectorsView(Resource):
         return "", 200
 
 
-@director_ns.route('/<int:id>')
+@director_ns.route('/<int:d_id>')
 class DirectorView(Resource):
-    def put(self, id):
+    def put(self, d_id):
         data = request.json
-        director = Director.query.filter(Director.id == id).one()
+        director = Director.query.filter(Director.id == d_id).one()
         director.name = data.get("name")
         db.session.add(director)
         db.session.commit()
         return "", 200
 
-    def patch(self, id):
-        director = Director.query.get(id)
+    def patch(self, d_id):
+        director = Director.query.get(d_id)
         data = request.json
         if data.get("name"):
             director.name = data.get("name")
         db.session.add(director)
         return "", 200
 
-    def delete(self, id):
-        Director.query.filter(Director.id == id).delete()
+    def delete(self, d_id):
+        Director.query.filter(Director.id == d_id).delete()
         db.session.commit()
 
 
@@ -126,26 +126,26 @@ class GenresView(Resource):
         return "", 200
 
 
-@genres_ns.route('/<int:id>')
+@genres_ns.route('/<int:g_id>')
 class GenreView(Resource):
-    def put(self, id):
+    def put(self, g_id):
         data = request.json
-        genre = Genre.query.filter(Genre.id == id).one()
+        genre = Genre.query.filter(Genre.id == g_id).one()
         genre.name = data.get("name")
         db.session.add(genre)
         db.session.commit()
         return "", 200
 
-    def patch(self, id):
-        genre = Director.query.get(id)
+    def patch(self, g_id):
+        genre = Genre.query.get(g_id)
         data = request.json
         if data.get('name'):
             genre.name = data.get("name")
         db.session.add(genre)
         return "", 200
 
-    def delete(self, id):
-        Genre.query.filter(Genre.id == id).delete()
+    def delete(self, g_id):
+        Genre.query.filter(Genre.id == g_id).delete()
         db.session.commit()
 
 
