@@ -90,7 +90,7 @@ class DirectorsView(Resource):
         director = Director(**data)
         db.session.add(director)
         db.session.commit()
-        return "", 200
+        return "", 201
 
 
 @director_ns.route('/<int:d_id>')
@@ -101,7 +101,7 @@ class DirectorView(Resource):
         director.name = data.get("name")
         db.session.add(director)
         db.session.commit()
-        return "", 200
+        return "", 204
 
     def patch(self, d_id):
         director = Director.query.get(d_id)
@@ -109,11 +109,12 @@ class DirectorView(Resource):
         if data.get("name"):
             director.name = data.get("name")
         db.session.add(director)
-        return "", 200
+        return "", 204
 
     def delete(self, d_id):
         Director.query.filter(Director.id == d_id).delete()
         db.session.commit()
+        return "", 204
 
 
 @genres_ns.route('/')
@@ -123,7 +124,7 @@ class GenresView(Resource):
         genre = Genre(**data)
         db.session.add(genre)
         db.session.commit()
-        return "", 200
+        return "", 201
 
 
 @genres_ns.route('/<int:g_id>')
@@ -134,7 +135,7 @@ class GenreView(Resource):
         genre.name = data.get("name")
         db.session.add(genre)
         db.session.commit()
-        return "", 200
+        return "", 204
 
     def patch(self, g_id):
         genre = Genre.query.get(g_id)
@@ -142,11 +143,12 @@ class GenreView(Resource):
         if data.get('name'):
             genre.name = data.get("name")
         db.session.add(genre)
-        return "", 200
+        return "", 204
 
     def delete(self, g_id):
         Genre.query.filter(Genre.id == g_id).delete()
         db.session.commit()
+        return "", 204
 
 
 if __name__ == '__main__':
